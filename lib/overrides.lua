@@ -2301,3 +2301,17 @@ function SMODS.calculate_round_score(flames)
 	end
 	return smods_calculate_round_score_stuff(flames)
 end
+
+-- Band-aid fix, need to figure out an actual fix later
+local draw_self = UIElement.draw_self
+function UIElement:draw_self()
+	if not self.config.colour then
+		self.config.colour = G.C.FILTER
+	end
+	draw_self(self)
+end
+
+local smods_shatters_ref = SMODS.shatters
+function SMODS.shatters(card)
+	return card.cry_glass_trigger or smods_shatters_ref(card)
+end
